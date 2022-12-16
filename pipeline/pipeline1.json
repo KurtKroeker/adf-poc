@@ -30,7 +30,7 @@
 				}
 			},
 			{
-				"name": "Web1",
+				"name": "Send message to user",
 				"type": "WebActivity",
 				"dependsOn": [
 					{
@@ -47,7 +47,18 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://develop.energycap.com/api/v202108/notification/type/1",
+					"method": "POST",
+					"headers": {
+						"eci-apikey": "ZWNhcHxUZXN0.dGVjaGRpdl8wMDF8MTE4MHwxNDYw.NDdhNzQzMmEtYzg2ZC00ODk5LWEwZjktZDBkNTY2NDA2MTZj"
+					},
+					"body": {
+						"value": "concat('{\"Subject\": \"ADF Message\",\"Message\": \"<h1>',concat(@variables('message'),', ',@variables('fullName'),'!'),'</h1>\",\"ReplyTo\": \"do-not-reply-kurt@energycap.com\",\"NotificationTypeId\": 1 }')",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"variables": {
