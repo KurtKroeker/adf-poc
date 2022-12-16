@@ -27,6 +27,12 @@
 						"type": "Expression"
 					},
 					"method": "PUT",
+					"headers": {
+						"eci-apikey": {
+							"value": "@pipeline().parameters.ecapApiKey",
+							"type": "Expression"
+						}
+					},
 					"body": {
 						"value": "{\n  \"exportMode\": \"@{pipeline().parameters.exportMode}\",\n  \"markAsExported\": @{pipeline().parameters.markAsExported},\n  \"exportNote\": \"Exported by ADF\"\n}",
 						"type": "Expression"
@@ -74,7 +80,7 @@
 				"typeProperties": {
 					"variableName": "exportListId",
 					"value": {
-						"value": "@activity('GetBillExportList').output.pipelineReturnValue.listId",
+						"value": "@string(json(activity('GetBillExportList').output.Response)[0].listId)",
 						"type": "Expression"
 					}
 				}
