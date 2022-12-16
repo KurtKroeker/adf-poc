@@ -27,7 +27,7 @@
 						}
 					},
 					"body": {
-						"value": "{\n  \"filters\": [\n    {\n      \"caption\": \"string\",\n      \"operator\": \"string\",\n      \"value\": \"string\"\n    }\n  ],\n  \"billingPeriod\": 1,\n  \"startDateForBill\": \"2022-12-16\",\n  \"endDateForBill\": \"2022-12-16\",\n  \"note\": \"string\",\n  \"batchSettings\": {\n    \"batchCode\": \"string\",\n    \"closeExistingBatch\": false,\n    \"statementDate\": \"2022-12-16\",\n    \"dueDate\": \"2022-12-16\",\n    \"nextReading\": \"2022-12-16\",\n    \"controlCode\": \"string\",\n    \"invoiceNumber\": \"string\",\n    \"accountPeriodNumber\": 1,\n    \"accountPeriodYear\": 1,\n    \"note\": \"string\"\n  }\n}",
+						"value": "{\n  \"filters\": [],\n  \"billingPeriod\": @{pipeline().parameters.billingPeriod},  \n  \"note\": \"Bill Split initiated by ADF\",\n  \"batchSettings\": {\n    \"batchCode\": \"@{guid()}\",\n    \"closeExistingBatch\": false,    \n    \"note\": \"Batch created by ADF\"\n  }\n}",
 						"type": "Expression"
 					}
 				}
@@ -41,6 +41,9 @@
 			"eciApiKey": {
 				"type": "String",
 				"defaultValue": "ZWNhcHxUZXN0.dGVjaGRpdl8wMDF8MTE4MHwxNDYw.NDdhNzQzMmEtYzg2ZC00ODk5LWEwZjktZDBkNTY2NDA2MTZj"
+			},
+			"billingPeriod": {
+				"type": "Int"
 			}
 		},
 		"annotations": []
