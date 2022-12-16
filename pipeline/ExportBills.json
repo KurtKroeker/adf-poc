@@ -7,7 +7,7 @@
 				"type": "WebActivity",
 				"dependsOn": [
 					{
-						"activity": "GetBillExportList",
+						"activity": "Set listId",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -56,6 +56,26 @@
 							"value": "@pipeline().parameters.ecapApiKey",
 							"type": "Expression"
 						}
+					}
+				}
+			},
+			{
+				"name": "Set listId",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "GetBillExportList",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "exportListId",
+					"value": {
+						"value": "@activity('GetBillExportList').output.pipelineReturnValue.listId",
+						"type": "Expression"
 					}
 				}
 			}
