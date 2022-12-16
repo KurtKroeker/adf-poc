@@ -9,7 +9,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "message",
-					"value": ""
+					"value": "Hello"
 				}
 			},
 			{
@@ -26,7 +26,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "fullName",
-					"value": ""
+					"value": "John Smith"
 				}
 			},
 			{
