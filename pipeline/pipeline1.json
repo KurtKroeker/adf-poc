@@ -1,0 +1,89 @@
+{
+	"name": "pipeline1",
+	"properties": {
+		"activities": [
+			{
+				"name": "ExportBills_APGL",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "GetBillExportList",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": {
+						"value": "@concat(pipeline().parameters.ecapBaseUrl,'/api/v3/list/',variables('exportListId'),'/export')",
+						"type": "Expression"
+					},
+					"method": "PUT",
+					"body": {
+						"value": "{\n  \"exportMode\": \"@{pipeline().parameters.exportMode}\",\n  \"markAsExported\": @{pipeline().parameters.markAsExported},\n  \"exportNote\": \"Exported by ADF\"\n}",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "GetBillExportList",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": {
+						"value": "@concat(pipeline().parameters.ecapBaseUrl,'/api/v3/list?listTypeId=',if(equals(toLower(pipeline().parameters.exportMode),'ap'),'24','25'))",
+						"type": "Expression"
+					},
+					"method": "GET",
+					"headers": {
+						"eci-apikey": {
+							"value": "@pipeline().parameters.ecapApiKey",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"ecapBaseUrl": {
+				"type": "String",
+				"defaultValue": "https://develop.energycap.com"
+			},
+			"exportMode": {
+				"type": "String"
+			},
+			"exportListId": {
+				"type": "Int"
+			},
+			"markAsExported": {
+				"type": "Bool",
+				"defaultValue": false
+			},
+			"ecapApiKey": {
+				"type": "String"
+			}
+		},
+		"variables": {
+			"exportListId": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
