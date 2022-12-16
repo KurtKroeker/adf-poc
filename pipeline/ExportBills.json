@@ -34,7 +34,7 @@
 						}
 					},
 					"body": {
-						"value": "{\n  \"exportMode\": \"@{pipeline().parameters.exportMode}\",\n  \"markAsExported\": @{pipeline().parameters.markAsExported},\n  \"exportNote\": \"Exported by ADF\"\n}",
+						"value": "{\n  \"exportMode\": \"@{pipeline().parameters.exportMode}\",\n  \"markAsExported\": @{if(pipeline().parameters.markAsExported,'true','false')},\n  \"exportNote\": \"Exported by ADF\"\n}",
 						"type": "Expression"
 					}
 				}
