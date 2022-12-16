@@ -1,6 +1,41 @@
 {
 	"name": "RunReformatter",
 	"properties": {
+		"activities": [
+			{
+				"name": "RunReformatter",
+				"type": "AzureFunctionActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"functionName": "ReformatBillFile",
+					"method": "POST",
+					"body": {
+						"value": "{\n    \"Base64ExportProfile\": \"@{pipeline().parameters.Base64ExportProfile}\",\n    \"Base64ExportFile\": \"@{pipeline().parameters.Base64ExportFile}\"\n}",
+						"type": "Expression"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ReformatBillsFile",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"Base64ExportProfile": {
+				"type": "String"
+			},
+			"Base64ExportFile": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }
