@@ -13,7 +13,7 @@
 				}
 			},
 			{
-				"name": "Set variable2",
+				"name": "Set username",
 				"type": "SetVariable",
 				"dependsOn": [
 					{
@@ -26,7 +26,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "fullName",
-					"value": "John Smith"
+					"value": {
+						"value": "@pipeline().parameters.Username",
+						"type": "Expression"
+					}
 				}
 			},
 			{
@@ -34,7 +37,7 @@
 				"type": "WebActivity",
 				"dependsOn": [
 					{
-						"activity": "Set variable2",
+						"activity": "Set username",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -55,12 +58,18 @@
 						"eci-apikey": "ZWNhcHxUZXN0.dGVjaGRpdl8wMDF8MTE4MHwxNDYw.NDdhNzQzMmEtYzg2ZC00ODk5LWEwZjktZDBkNTY2NDA2MTZj"
 					},
 					"body": {
-						"value": "concat('{\"Subject\": \"ADF Message\",\"Message\": \"<h1>',concat(@variables('message'),', ',@variables('fullName'),'!'),'</h1>\",\"ReplyTo\": \"do-not-reply-kurt@energycap.com\",\"NotificationTypeId\": 1 }')",
+						"value": "{\n    \"Subject\": \"Kurt Test\",\n    \"Message\": \"<h1>Hello, world!</h1>\",\n    \"ReplyTo\": \"do-not-reply-kurt@energycap.com\",\n    \"PrimaryAction\": {\n        \"Url\": \"https://www.energycap.com\",\n        \"Label\": \"EnergyCAP Website\",\n        \"OpenInNewWindow\": true\n    },\n    \"SecondaryAction\": {\n        \"Url\": \"https://www.google.com\",\n        \"Label\": \"The Googs\",\n        \"OpenInNewWindow\": false\n    },\n    \"NotificationTypeId\": 1,\n    \"SendToAllUsers\": true\n}",
 						"type": "Expression"
 					}
 				}
 			}
 		],
+		"parameters": {
+			"Username": {
+				"type": "String",
+				"defaultValue": "John Smith"
+			}
+		},
 		"variables": {
 			"message": {
 				"type": "String"
