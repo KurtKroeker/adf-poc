@@ -88,9 +88,6 @@
 			"exportMode": {
 				"type": "String"
 			},
-			"exportListId": {
-				"type": "Int"
-			},
 			"markAsExported": {
 				"type": "Bool",
 				"defaultValue": false
