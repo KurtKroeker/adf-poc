@@ -27,7 +27,7 @@
 						}
 					},
 					"body": {
-						"value": "{\n  \"filters\": [],\n  \"billingPeriod\": @{pipeline().parameters.billingPeriod},  \n  \"note\": \"Bill Split initiated by ADF\",\n  \"batchSettings\": {\n    \"batchCode\": \"@{guid()}\",\n    \"closeExistingBatch\": false,    \n    \"note\": \"Batch created by ADF\"\n  }\n}",
+						"value": "{\n  \"billingPeriod\": @{pipeline().parameters.billingPeriod},  \n  \"note\": \"Bill Split initiated by ADF\",\n  \"batchSettings\": {\n    \"batchCode\": \"@{guid()}\",\n    \"closeExistingBatch\": false,    \n    \"note\": \"Batch created by ADF\"\n  }\n}",
 						"type": "Expression"
 					}
 				}
