@@ -9,7 +9,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "message",
-					"value": "Hello"
+					"value": {
+						"value": "@pipeline().parameters.greeting",
+						"type": "Expression"
+					}
 				}
 			},
 			{
@@ -58,7 +61,7 @@
 						"eci-apikey": "ZWNhcHxUZXN0.dGVjaGRpdl8wMDF8MTE4MHwxNDYw.NDdhNzQzMmEtYzg2ZC00ODk5LWEwZjktZDBkNTY2NDA2MTZj"
 					},
 					"body": {
-						"value": "{\n    \"Subject\": \"Message @pipeline().RunId\",\n    \"Message\": \"<h1>@concat(variables('message'),' ,',variables('fullName'))</h1>\",\n    \"ReplyTo\": \"@variables('replyToEmail')\",    \n    \"NotificationTypeId\": 1,\n    \"SendToAllUsers\": false\n}",
+						"value": "{\n    \"userIds\": [1460],\n    \"Subject\": \"Message @{pipeline().RunId}\",\n    \"Message\": \"<h1>@{variables('message')}, @{variables('fullName')}</h1>\",\n    \"ReplyTo\": \"@{variables('replyToEmail')}\", \n    \"NotificationTypeId\": 1,\n    \"SendToAllUsers\": false\n}",
 						"type": "Expression"
 					}
 				}
@@ -85,6 +88,10 @@
 			"Username": {
 				"type": "String",
 				"defaultValue": "John Smith"
+			},
+			"greeting": {
+				"type": "String",
+				"defaultValue": "Hello"
 			}
 		},
 		"variables": {
