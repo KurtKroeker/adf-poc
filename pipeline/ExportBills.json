@@ -84,6 +84,43 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "Export Bill List is empty",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "ExportBills_APGL",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(json(activity('ExportBills_APGL').output.Response).status.message,'Sorry, empty list of Bills is not acceptable.')",
+						"type": "Expression"
+					},
+					"ifTrueActivities": [
+						{
+							"name": "No Bills Exported Notification",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "SendNotification",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"greeting": "No bills were exported"
+								}
+							}
+						}
+					]
+				}
 			}
 		],
 		"parameters": {
