@@ -148,6 +148,10 @@
 						"Base64ExportFile": {
 							"value": "@base64(activity('ExportBills_APGL').output.Response)",
 							"type": "Expression"
+						},
+						"ReformatterId": {
+							"value": "@pipeline().parameters.reformatterId",
+							"type": "Expression"
 						}
 					}
 				}
@@ -244,14 +248,19 @@
 				"defaultValue": "https://develop.energycap.com"
 			},
 			"exportMode": {
-				"type": "String"
+				"type": "String",
+				"defaultValue": "ap"
 			},
 			"markAsExported": {
 				"type": "Bool",
-				"defaultValue": false
+				"defaultValue": true
 			},
 			"ecapApiKey": {
 				"type": "String"
+			},
+			"reformatterId": {
+				"type": "String",
+				"defaultValue": "ClientA_AP"
 			}
 		},
 		"variables": {
