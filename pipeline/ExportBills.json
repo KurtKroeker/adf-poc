@@ -142,11 +142,11 @@
 					"waitOnCompletion": true,
 					"parameters": {
 						"Base64ExportProfile": {
-							"value": "@base64(activity('Retrieve Bill Export Profile').output)",
+							"value": "@base64(activity('Retrieve Bill Export Profile').output.Response)",
 							"type": "Expression"
 						},
 						"Base64ExportFile": {
-							"value": "@base64(activity('ExportBills_APGL').output)",
+							"value": "@base64(activity('ExportBills_APGL').output.Response)",
 							"type": "Expression"
 						}
 					}
