@@ -231,7 +231,7 @@
 					"waitOnCompletion": true,
 					"parameters": {
 						"greeting": {
-							"value": "@concat('Error reformatting bills for ', pipeline().parameters.exportMode, ': ', activity('RunReformatter').output)",
+							"value": "@concat('Error reformatting bills for ', pipeline().parameters.exportMode)",
 							"type": "Expression"
 						}
 					}
