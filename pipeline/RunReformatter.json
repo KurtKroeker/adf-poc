@@ -18,7 +18,7 @@
 					"functionName": "ReformatBillFile",
 					"method": "POST",
 					"body": {
-						"value": "{\n    \"Base64ExportProfile\": \"@{pipeline().parameters.Base64ExportProfile}\",\n    \"Base64ExportFile\": \"@{pipeline().parameters.Base64ExportFile}\"\n}",
+						"value": "{\n    \"Base64ExportProfile\": \"@{pipeline().parameters.Base64ExportProfile}\",\n    \"Base64ExportFile\": \"@{pipeline().parameters.Base64ExportFile}\",\n    \"ReformatterId\": \"@{pipeline().parameters.ReformatterId}\"\n}",
 						"type": "Expression"
 					}
 				},
@@ -34,6 +34,10 @@
 			},
 			"Base64ExportFile": {
 				"type": "String"
+			},
+			"ReformatterId": {
+				"type": "String",
+				"defaultValue": "ClientA_AP"
 			}
 		},
 		"annotations": []
