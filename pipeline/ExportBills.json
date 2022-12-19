@@ -99,7 +99,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(json(activity('ExportBills_APGL').output.Response).status.message,'Sorry, empty list of Bills is not acceptable.')",
+						"value": "@equals(activity('ExportBills_APGL').output.status.message,'Sorry, empty list of Bills is not acceptable.')",
 						"type": "Expression"
 					},
 					"ifTrueActivities": [
@@ -120,6 +120,121 @@
 							}
 						}
 					]
+				}
+			},
+			{
+				"name": "RunReformatter",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Retrieve Bill Export Profile",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "RunReformatter",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"Base64ExportProfile": {
+							"value": "@base64(activity('Retrieve Bill Export Profile').output)",
+							"type": "Expression"
+						},
+						"Base64ExportFile": {
+							"value": "@base64(activity('ExportBills_APGL').output)",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Retrieve Bill Export Profile",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "ExportBills_APGL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": {
+						"value": "@concat(pipeline().parameters.ecapBaseUrl,'/api/v3/bill/exportProfile?exportMode=',pipeline().parameters.exportMode)",
+						"type": "Expression"
+					},
+					"method": "GET",
+					"headers": {
+						"eci-apikey": {
+							"value": "@pipeline().parameters.ecapApiKey",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Reformatter Success Notification",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "RunReformatter",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SendNotification",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"greeting": {
+							"value": "@concat('Successfully reformatted bills for ', pipeline().parameters.exportMode)",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Reformatter Error Notification",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "RunReformatter",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SendNotification",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"greeting": {
+							"value": "@concat('Error reformatting bills for ', pipeline().parameters.exportMode, ': ', activity('RunReformatter').output)",
+							"type": "Expression"
+						}
+					}
 				}
 			}
 		],
