@@ -1,0 +1,10 @@
+{
+	"name": "akv_apglx_poc",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://akv-adf-poc.vault.azure.net/"
+		}
+	}
+}
